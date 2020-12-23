@@ -1,0 +1,33 @@
+{
+  "name": "ld-tools-ts",
+  "version": "0.0.1",
+  "description": "Linked Data Tools for TypeScript Applications",
+  "main": "index.ts",
+  "scripts": {
+    "test": "npm run test:sparql:client",
+    "test:sparql:client": "ts-node -P test/tsconfig.json test/test-sparql.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://onnohaldar@github.com/dgwnu/ld-tools-ts.git"
+  },
+  "keywords": [
+    "linked",
+    "data",
+    "typescript"
+  ],
+  "author": "Onno Haldar <onno@haldar.nl>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dgwnu/ld-tools-ts/issues"
+  },
+  "homepage": "https://github.com/dgwnu/ld-tools-ts#readme",
+  "devDependencies": {
+    "@types/node": "^14.14.14",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "rxjs": "^6.6.3"
+  }
+}
