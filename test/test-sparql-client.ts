@@ -1,4 +1,5 @@
 /**
+ * @file test-sparql-client.ts
  *
  * @author Onno Haldar <onno@plan-k.nl>
  *

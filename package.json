@@ -5,7 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "test": "npm run test:sparql:client",
-    "test:sparql:client": "ts-node -P test/tsconfig.json test/test-sparql.ts"
+    "test:sparql:client": "ts-node -P test/tsconfig.json test/test-sparql-client.ts"
   },
   "repository": {
     "type": "git",
