@@ -1,5 +1,5 @@
 {
-  "name": "ld-tools-ts",
+  "name": "@dgwnu/ld-tools-ts",
   "version": "0.0.1",
   "description": "Linked Data Tools for TypeScript Applications",
   "main": "index.ts",
