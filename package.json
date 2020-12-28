@@ -28,6 +28,7 @@
     "typescript": "^4.1.3"
   },
   "dependencies": {
+    "@dgwnu/tripple-stores": "git+https://github.com/dgwnu/tripple-stores.git",
     "rxjs": "^6.6.3"
   }
 }
