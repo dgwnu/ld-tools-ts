@@ -1,11 +1,9 @@
 /**
+ * Test TypeScript SparqlClient Class
+ * 
  * @file test-sparql-client.ts
  *
  * @author Onno Haldar <onno@plan-k.nl>
- *
- * Test SparqJs using typescript node-ts
- * 
- * @see <https://github.com/ncbo/sparql-code-examples/blob/master/javascript/node_test.js>
  *
  */
 
