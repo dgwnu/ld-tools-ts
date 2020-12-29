@@ -17,14 +17,14 @@ const queryStatements = [
   'WHERE {',
   '  ?subject ?predicate ?object .',
   '}',
-  'LIMIT 100'
-];
+  'LIMIT 10'
+].join('\n');
 
 console.log('---- Test class NodeSparql ----');
 const sparqlClient = new SparqlClient({
-  host: 'local',
+  host: 'http://dbpedia.org',
   port: 3030,
-  path: '/fooddata',
+  path: '/sparql',
   nameSpaces: [
     { prefix: 'rdf', uri: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#' },
     { prefix: 'rdfs', uri: 'http://www.w3.org/2000/01/rdf-schema#' },
@@ -33,7 +33,7 @@ const sparqlClient = new SparqlClient({
 });
 
 sparqlClient.query(queryStatements).subscribe(
-  data => console.log('nodeSparql.getRequest - data', data),
-  error => console.log('nodeSparql.getRequest - error', error),
-  () => console.log('nodeSparql.getRequest - complete')
+  data => console.log('nodeSparql.query - data', data),
+  error => console.log('nodeSparql.query - error', error),
+  () => console.log('nodeSparql.query - complete')
 );
