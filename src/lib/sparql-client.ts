@@ -52,7 +52,7 @@ export class SparqlClient {
         namedGraphUri?: URL,
         reqArgs?: RequestArgs) 
     {
-        return new Observable<QueryResult[]>(observer => {
+        return new Observable<any>(observer => {
 
             // Check and set request args
             if (!reqArgs && this.defaultClientArgs) {
@@ -61,7 +61,7 @@ export class SparqlClient {
                 observer.error('Sparql client is not specified (!reqArgs && !this.baseArgs)');
             }
 
-            // Perform query via get request
+            // Build query via get request
             const queryViaGetReq = new ClientRequest({
                 host: reqArgs.host,
                 port: reqArgs.port,
@@ -74,15 +74,31 @@ export class SparqlClient {
                 if (response.statusCode) console.log('res.statusCode', response.statusCode);
                 if (response.statusMessage) console.log('res.statusMessage', response.statusMessage);
 
+                // Parse and convert Data
+                let data = '';
+
+                // Parse on each data chunk event
+                response.on('data', (chunk: string) => {
+                    data += chunk;
+                });
+
+                // Convert to JSON after last data chunk event
+                response.on('end', () => {
+                    observer.next(JSON.parse(data));
+                    observer.complete();
+                });
+
+
             });
 
-            // Consume get query
-            
-            let reqResps: RequestResp[] = [];
-            reqResps.push({ rowNr: 0, values: [{ varName: 'subject', varUri: 'test-uri' }] });
+            // Query via get request error event handler
+            queryViaGetReq.on('error', error => {
+                observer.error({ name: error.name, message: error.message, stack: error.stack });    
+            });
 
-            observer.next(reqResps);
-            observer.complete();
+            // Execute query via get request
+            queryViaGetReq.end();
+
         });
     }
 
