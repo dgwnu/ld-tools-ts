@@ -1,13 +1,11 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX d: <http://dbpedia.org/ontology/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX ont: <http://dbpedia.org/ontology/>
 
-SELECT ?artistName ?albumName
+SELECT *
 WHERE
-{
-  ?album d:producer :Timbaland .
-  ?album d:musicalArtist :artist .
-  ?album rdfs:label ?albumName .
-  ?artist rdfs:label ?artistName .
-  FILTER ( lang(?artistName) = "en" ) .
-  FILTER ( lang(?albumName) = "en" ) .
-}
+     {
+        ?s ?p ?o
+     }
+LIMIT 10
