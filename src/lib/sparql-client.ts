@@ -23,7 +23,7 @@ interface RequestArgs {
     }[];
 };
 
-interface RequestResp {
+interface QueryResult {
     rowNr: number;
     values: {
         varName: string;
@@ -35,39 +35,48 @@ export class SparqlClient {
 
     /**
      * Sparql Client Constructor
-     * @param clientArgs Sparql Client Parameters for all Requests
+     * @param clientArgs Default Sparql Client Parameters for all Requests
      */
-    constructor(private clientArgs?: RequestArgs) {
-
-    }
+    constructor(private defaultClientArgs?: RequestArgs) { }
 
     /**
      * Query via GET @see <https://www.w3.org/TR/sparql11-protocol/#query-via-get>
-     * @param query 
-     * @param reqArgs 
+     * @param query Sparql query
+     * @param defaultGraphUri Default Graph Uri (optional) 
+     * @param namedGraphUri Named Graph Uri (optional)
+     * @param reqArgs Endpoint server args (required of no default client args specified)
      */
-    getQuery(
+    query(
         query: string, 
         defaultGraphUri?: URL,
         namedGraphUri?: URL,
         reqArgs?: RequestArgs) 
     {
-        return new Observable<RequestResp[]>(observer => {
+        return new Observable<QueryResult[]>(observer => {
 
-            if (!reqArgs && this.clientArgs) {
-                reqArgs = this.clientArgs;
+            // Check and set request args
+            if (!reqArgs && this.defaultClientArgs) {
+                reqArgs = this.defaultClientArgs;
             } else {
                 observer.error('Sparql client is not specified (!reqArgs && !this.baseArgs)');
             }
 
-            const getQueryArgs: ClientRequestArgs = {
+            // Perform query via get request
+            const queryViaGetReq = new ClientRequest({
                 host: reqArgs.host,
                 port: reqArgs.port,
                 path: reqArgs.path,
-                headers: {
-                  'Accept': 'application/json',
-                }
-            };
+                headers: { 'Accept': 'application/json' },
+                method: 'GET'
+            }, response => {
+                // Log Response Header info
+                console.log('SparqlClient > query > response.headers: ', response.headers);
+                if (response.statusCode) console.log('res.statusCode', response.statusCode);
+                if (response.statusMessage) console.log('res.statusMessage', response.statusMessage);
+
+            });
+
+            // Consume get query
             
             let reqResps: RequestResp[] = [];
             reqResps.push({ rowNr: 0, values: [{ varName: 'subject', varUri: 'test-uri' }] });
