@@ -48,8 +48,8 @@ export class SparqlClient {
      */
     query(
         query: string, 
-        defaultGraphUri?: URL,
-        namedGraphUri?: URL,
+        defaultGraphUri?: string,
+        namedGraphUri?: string,
         reqArgs?: RequestArgs) 
     {
         return new Observable<any>(observer => {
@@ -62,10 +62,20 @@ export class SparqlClient {
             }
 
             // Build query via get request
+            let viaGetReqPath = reqArgs.path + '?query=' + encodeURIComponent(query);
+
+            if (defaultGraphUri) {
+                viaGetReqPath += '&default-graph-uri=' + encodeURIComponent(defaultGraphUri);
+            }
+
+            if (namedGraphUri) {
+                viaGetReqPath += '&named-graph-uri=' + encodeURIComponent(namedGraphUri);
+            }
+
             const queryViaGetReq = new ClientRequest({
                 host: reqArgs.host,
                 port: reqArgs.port,
-                path: reqArgs.path,
+                path: viaGetReqPath,
                 headers: { 'Accept': 'application/json' },
                 method: 'GET'
             }, response => {
