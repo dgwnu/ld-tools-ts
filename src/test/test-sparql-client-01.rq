@@ -5,7 +5,7 @@ PREFIX ont: <http://dbpedia.org/ontology/>
 
 SELECT *
 WHERE
-     {
+    {
         ?subject ?predicate ?object .
-     }
+    }
 LIMIT 10
