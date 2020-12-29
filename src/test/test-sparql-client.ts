@@ -45,4 +45,5 @@ function logData(data: any) {
         const v = vars[j];
         console.log(v+"="+b[v].value);
     }
+  }
 }
