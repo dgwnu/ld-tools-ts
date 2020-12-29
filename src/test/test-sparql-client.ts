@@ -22,8 +22,8 @@ const queryStatements = [
 
 console.log('---- Test class NodeSparql ----');
 const sparqlClient = new SparqlClient({
-  host: 'http://dbpedia.org',
-  port: 3030,
+  host: 'dbpedia.org',
+  port: 80,
   path: '/sparql',
   nameSpaces: [
     { prefix: 'rdf', uri: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#' },

@@ -72,6 +72,8 @@ export class SparqlClient {
                 viaGetReqPath += '&named-graph-uri=' + encodeURIComponent(namedGraphUri);
             }
 
+            console.log(`viaGetReqPath = ${viaGetReqPath}`);
+
             const queryViaGetReq = new ClientRequest({
                 host: reqArgs.host,
                 port: reqArgs.port,
