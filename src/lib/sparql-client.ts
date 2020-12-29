@@ -50,13 +50,24 @@ export class SparqlClient {
         query: string, 
         defaultGraphUri?: URL,
         namedGraphUri?: URL,
-        reqArgs?: RequestArgs): Observable<RequestResp[]> 
+        reqArgs?: RequestArgs) 
     {
         return new Observable<RequestResp[]>(observer => {
 
-            if (!reqArgs && !this.clientArgs) {
-                observer.error('!reqArgs && !this.baseArgs');
+            if (!reqArgs && this.clientArgs) {
+                reqArgs = this.clientArgs;
+            } else {
+                observer.error('Sparql client is not specified (!reqArgs && !this.baseArgs)');
             }
+
+            const clientReqArgs: ClientRequestArgs = {
+                host: 'localhost',
+                port: 3030,
+                path: '/fooddata',
+                headers: {
+                  'Accept': 'application/json',
+                }
+            };
             
             let reqResps: RequestResp[] = [];
             reqResps.push({ rowNr: 0, values: [{ varName: 'subject', varUri: 'test-uri' }] });
