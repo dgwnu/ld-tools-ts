@@ -2,9 +2,11 @@
  *
  * @author Onno Haldar <onno@plan-k.nl>
  *
- * NodeJs SparQL Class (also working within node-ts)
+ * SparQL Client Class
  * 
- * @see based on <https://github.com/ncbo/sparql-code-examples/blob/master/javascript/node_test.js>
+ * @see based on:
+ *      Example <https://github.com/ncbo/sparql-code-examples/blob/master/javascript/node_test.js>
+ *      W3C-standard <https://www.w3.org/TR/sparql11-protocol/#query-operation>
  *
  */
 
@@ -31,11 +33,25 @@ interface RequestResp {
 
 export class SparqlClient {
 
+    /**
+     * Sparql Client Constructor
+     * @param clientArgs Sparql Client Parameters for all Requests
+     */
     constructor(private clientArgs?: RequestArgs) {
 
     }
 
-    getRequest(queryStatements: string[], reqArgs?: RequestArgs): Observable<RequestResp[]> {
+    /**
+     * Query via GET @see <https://www.w3.org/TR/sparql11-protocol/#query-via-get>
+     * @param query 
+     * @param reqArgs 
+     */
+    getQuery(
+        query: string, 
+        defaultGraphUri?: URL,
+        namedGraphUri?: URL,
+        reqArgs?: RequestArgs): Observable<RequestResp[]> 
+    {
         return new Observable<RequestResp[]>(observer => {
 
             if (!reqArgs && !this.clientArgs) {
