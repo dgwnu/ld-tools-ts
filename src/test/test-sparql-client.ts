@@ -33,7 +33,18 @@ const sparqlClient = new SparqlClient({
 });
 
 sparqlClient.query(queryStatements).subscribe(
-  data => console.log('nodeSparql.query - data', data),
+  data => console.log('nodeSparql.query - data', logData(data)),
   error => console.log('nodeSparql.query - error', error),
   () => console.log('nodeSparql.query - complete')
 );
+
+function logData(data: any) {
+  const vars = data.head.vars;
+  for (const i in data.results.bindings) {
+    const b = data.results.bindings[i];
+    console.log("\nrow "+i+" :");
+    for (const j in vars) {
+        const v = vars[j];
+        console.log(v+"="+b[v].value);
+    }
+}
