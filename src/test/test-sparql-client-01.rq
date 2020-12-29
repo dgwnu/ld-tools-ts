@@ -1,11 +1,9 @@
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
-PREFIX ont: <http://dbpedia.org/ontology/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
 
-SELECT *
+SELECT ?subject
 WHERE
-    {
-        ?subject ?predicate ?object .
-    }
+     {
+        ?subject a owl:FunctionalProperty
+     }
 LIMIT 10
