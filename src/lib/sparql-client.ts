@@ -60,10 +60,10 @@ export class SparqlClient {
                 observer.error('Sparql client is not specified (!reqArgs && !this.baseArgs)');
             }
 
-            const clientReqArgs: ClientRequestArgs = {
-                host: 'localhost',
-                port: 3030,
-                path: '/fooddata',
+            const getQueryArgs: ClientRequestArgs = {
+                host: reqArgs.host,
+                port: reqArgs.port,
+                path: reqArgs.path,
                 headers: {
                   'Accept': 'application/json',
                 }
