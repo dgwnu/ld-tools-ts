@@ -53,7 +53,7 @@ export class SparqlClient {
                 observer.error('Sparql client is not specified (!reqArgs && !this.baseArgs)');
             }
 
-            // Build query via get request
+            // Build query via get request path
             let viaGetReqPath = '?query=' + encodeURIComponent(query);
 
             if (reqArgs.path) {
@@ -70,6 +70,7 @@ export class SparqlClient {
 
             console.log(`viaGetReqPath = ${viaGetReqPath}`);
 
+            // Define via get request query
             const queryViaGetReq = new ClientRequest({
                 host: reqArgs.host,
                 port: reqArgs.port,
