@@ -10,7 +10,7 @@
  *
  */
 
-import { ClientRequest, ClientRequestArgs } from 'http';
+import { ClientRequest } from 'http';
 import { Observable } from 'rxjs';
 
 interface RequestArgs {
@@ -20,14 +20,6 @@ interface RequestArgs {
     nameSpaces?: {
         prefix: string;
         uri: string;
-    }[];
-};
-
-interface QueryResult {
-    rowNr: number;
-    values: {
-        varName: string;
-        varUri: string;
     }[];
 };
 
