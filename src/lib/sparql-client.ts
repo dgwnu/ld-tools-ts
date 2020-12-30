@@ -57,8 +57,8 @@ export class SparqlClient {
                 // Build query via get request path
                 let viaGetReqPath = '?query=' + encodeURIComponent(query);
 
-                if (reqArgs.path) {
-                    viaGetReqPath = reqArgs.path + viaGetReqPath;
+                if (buildReqArgs.path) {
+                    viaGetReqPath = buildReqArgs.path + viaGetReqPath;
                 }
 
                 if (defaultGraphUri) {
@@ -73,8 +73,8 @@ export class SparqlClient {
 
                 // Define via get request query
                 const queryViaGetReq = new ClientRequest({
-                    host: reqArgs.host,
-                    port: reqArgs.port,
+                    host: buildReqArgs.host,
+                    port: buildReqArgs.port,
                     path: viaGetReqPath,
                     headers: { 'Accept': 'application/json' },
                     method: 'GET'
