@@ -54,7 +54,11 @@ export class SparqlClient {
             }
 
             // Build query via get request
-            let viaGetReqPath = reqArgs.path ? reqArgs.path : '' + '?query=' + encodeURIComponent(query);
+            let viaGetReqPath = '?query=' + encodeURIComponent(query);
+
+            if (reqArgs.path) {
+                viaGetReqPath = reqArgs.path + viaGetReqPath;
+            }
 
             if (defaultGraphUri) {
                 viaGetReqPath += '&default-graph-uri=' + encodeURIComponent(defaultGraphUri);
