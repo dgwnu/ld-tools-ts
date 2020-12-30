@@ -10,13 +10,13 @@
  *
  */
 
-import { ClientRequest } from 'http';
+import { ClientRequest, ClientRequestArgs } from 'http';
 import { Observable } from 'rxjs';
 
 interface RequestArgs {
     host: string;
     port?: number;
-    path?: string; 
+    path?: string;
     nameSpaces?: {
         prefix: string;
         uri: string;
@@ -39,74 +39,78 @@ export class SparqlClient {
      * @param reqArgs Endpoint server args (required of no default client args specified)
      */
     query(
-        query: string, 
+        query: string,
         defaultGraphUri?: string,
         namedGraphUri?: string,
-        reqArgs?: RequestArgs) 
-    {
+        reqArgs?: RequestArgs) {
         return new Observable<any>(observer => {
+            let buildReqArgs: ClientRequestArgs;
+
+            if (reqArgs) {
+                buildReqArgs = reqArgs;
+            } else {
+                buildReqArgs = this.defaultClientArgs;
+            }
 
             // Check and set request args
-            if (!reqArgs && this.defaultClientArgs) {
-                reqArgs = this.defaultClientArgs;
+            if (buildReqArgs) {
+                // Build query via get request path
+                let viaGetReqPath = '?query=' + encodeURIComponent(query);
+
+                if (reqArgs.path) {
+                    viaGetReqPath = reqArgs.path + viaGetReqPath;
+                }
+
+                if (defaultGraphUri) {
+                    viaGetReqPath += '&default-graph-uri=' + encodeURIComponent(defaultGraphUri);
+                }
+
+                if (namedGraphUri) {
+                    viaGetReqPath += '&named-graph-uri=' + encodeURIComponent(namedGraphUri);
+                }
+
+                console.log(`viaGetReqPath = ${viaGetReqPath}`);
+
+                // Define via get request query
+                const queryViaGetReq = new ClientRequest({
+                    host: reqArgs.host,
+                    port: reqArgs.port,
+                    path: viaGetReqPath,
+                    headers: { 'Accept': 'application/json' },
+                    method: 'GET'
+                }, response => {
+                    // Log Response Header info
+                    console.log('SparqlClient > query > response.headers: ', response.headers);
+                    if (response.statusCode) console.log('res.statusCode', response.statusCode);
+                    if (response.statusMessage) console.log('res.statusMessage', response.statusMessage);
+
+                    // Parse and convert Data
+                    let data = '';
+
+                    // Parse on each data chunk event
+                    response.on('data', (chunk: string) => {
+                        data += chunk;
+                    });
+
+                    // Convert to JSON after last data chunk event
+                    response.on('end', () => {
+                        observer.next(JSON.parse(data));
+                        observer.complete();
+                    });
+
+
+                });
+
+                // Query via get request error event handler
+                queryViaGetReq.on('error', error => {
+                    observer.error({ name: error.name, message: error.message, stack: error.stack });
+                });
+
+                // Execute query via get request
+                queryViaGetReq.end();
             } else {
                 observer.error('Sparql client is not specified (!reqArgs && !this.baseArgs)');
             }
-
-            // Build query via get request path
-            let viaGetReqPath = '?query=' + encodeURIComponent(query);
-
-            if (reqArgs.path) {
-                viaGetReqPath = reqArgs.path + viaGetReqPath;
-            }
-
-            if (defaultGraphUri) {
-                viaGetReqPath += '&default-graph-uri=' + encodeURIComponent(defaultGraphUri);
-            }
-
-            if (namedGraphUri) {
-                viaGetReqPath += '&named-graph-uri=' + encodeURIComponent(namedGraphUri);
-            }
-
-            console.log(`viaGetReqPath = ${viaGetReqPath}`);
-
-            // Define via get request query
-            const queryViaGetReq = new ClientRequest({
-                host: reqArgs.host,
-                port: reqArgs.port,
-                path: viaGetReqPath,
-                headers: { 'Accept': 'application/json' },
-                method: 'GET'
-            }, response => {
-                // Log Response Header info
-                console.log('SparqlClient > query > response.headers: ', response.headers);
-                if (response.statusCode) console.log('res.statusCode', response.statusCode);
-                if (response.statusMessage) console.log('res.statusMessage', response.statusMessage);
-
-                // Parse and convert Data
-                let data = '';
-
-                // Parse on each data chunk event
-                response.on('data', (chunk: string) => {
-                    data += chunk;
-                });
-
-                // Convert to JSON after last data chunk event
-                response.on('end', () => {
-                    observer.next(JSON.parse(data));
-                    observer.complete();
-                });
-
-
-            });
-
-            // Query via get request error event handler
-            queryViaGetReq.on('error', error => {
-                observer.error({ name: error.name, message: error.message, stack: error.stack });    
-            });
-
-            // Execute query via get request
-            queryViaGetReq.end();
 
         });
     }
