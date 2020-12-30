@@ -1,11 +1,13 @@
 {
-  "name": "@dgwnu/ld-tools-ts",
+  "name": "@dgwnu/ld-tools-ts-dev",
   "version": "0.0.1",
   "description": "Linked Data Tools for TypeScript Applications",
   "main": "index.ts",
   "scripts": {
+    "build": "npm run build:lib",
+    "build:lib": "rollup -c",
     "test": "npm run test:sparql:client",
-    "test:sparql:client": "ts-node -P ts-node-config.json src/test/test-sparql-client.ts"
+    "test:sparql:client": "ts-node -P ts-node-config.json test/test-sparql-client.ts"
   },
   "repository": {
     "type": "git",
