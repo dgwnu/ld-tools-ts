@@ -44,6 +44,7 @@ export class SparqlClient {
         namedGraphUri?: string,
         reqArgs?: RequestArgs) {
         return new Observable<any>(observer => {
+            // Build request args
             let buildReqArgs: ClientRequestArgs = {};
 
             if (reqArgs) {
@@ -52,8 +53,7 @@ export class SparqlClient {
                 buildReqArgs = this.defaultClientArgs;
             }
 
-            // Check and set request args
-            if (buildReqArgs == {}) {
+            if (buildReqArgs.host) {
                 // Build query via get request path
                 let viaGetReqPath = '?query=' + encodeURIComponent(query);
 
