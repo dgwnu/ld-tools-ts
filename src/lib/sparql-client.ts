@@ -38,7 +38,7 @@ export class SparqlClient {
      * @param namedGraphUri Named Graph Uri (optional)
      * @param reqArgs Endpoint server args (required of no default client args specified)
      */
-    query(
+    queryViaGet(
         query: string,
         defaultGraphUri?: string,
         namedGraphUri?: string,
