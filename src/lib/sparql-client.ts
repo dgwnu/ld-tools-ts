@@ -10,9 +10,12 @@
  *
  */
 
-import { inspect } from 'util';
+/**
+ * Node Package Imports
+ */
 import { ClientRequest, ClientRequestArgs } from 'http';
 import { Observable } from 'rxjs';
+import { IRI } from 'rdflib-ts'; 
 
 interface RequestArgs {
     host: string;
@@ -23,6 +26,19 @@ interface RequestArgs {
         uri: string;
     }[];
 };
+
+/**
+ * Data Bindings of a Query Result
+ */
+interface VariableBinding {
+    variable: string;
+    value: IRI;
+}
+
+interface QueryResultRow {
+    rowNr: number;
+    bindings: VariableBinding[];
+}
 
 export class SparqlClient {
 
@@ -44,7 +60,7 @@ export class SparqlClient {
         defaultGraphUri?: string,
         namedGraphUri?: string,
         reqArgs?: RequestArgs) {
-        return new Observable<any>(observer => {
+        return new Observable<QueryResultRow[]>(observer => {
             // Build request args
             let buildReqArgs: ClientRequestArgs = {};
 
@@ -113,7 +129,12 @@ export class SparqlClient {
 
 }
 
-function logData(data: any) {
+/**
+ * 
+ * @param data 
+ */
+function getBindings(data: any): { bindi } {
+    let bindings = []; 
     const vars = data.head.vars;
 
     for (const i in data.results.bindings) {
