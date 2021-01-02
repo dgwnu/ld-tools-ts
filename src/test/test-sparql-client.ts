@@ -26,12 +26,15 @@ const sparqlClient = new SparqlClient({
 });
 
 const sparqlQuery = [
+  'PREFIX dbo: <http://dbpedia.org/ontology/>',
   'SELECT ?subject',
   'WHERE {',
   '  ?subject a owl:FunctionalProperty .',
   '}',
   'LIMIT 10'
-].join('\n')
+].join('\n');
+
+NamespaceManagerInstance.registerNamespace('ex', 'http://example.org#');
 
 sparqlClient.queryViaGet(sparqlQuery).subscribe(
   data => console.log('nodeSparql.query - data', console.log(inspect(data, false, 5, true))),
