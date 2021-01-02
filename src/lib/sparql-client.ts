@@ -163,5 +163,7 @@ function getQueryRsultRows(chunk: string) {
           bindings: bindings
       });
     }
+
+    return resultRows;
 }
   
