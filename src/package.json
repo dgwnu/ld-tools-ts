@@ -31,6 +31,7 @@
     "rollup": "^2.35.1",
     "rollup-plugin-typescript2": "^0.29.0",
     "@dgwnu/fuseki-cli": "git+https://github.com/dgwnu/fuseki-cli.git",
-    "rxjs": "^6.6.3"
+    "rxjs": "^6.6.3",
+    "rdflib-ts": "1.2.58"
   }
 }
