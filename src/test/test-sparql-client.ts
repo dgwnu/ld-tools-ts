@@ -25,15 +25,15 @@ const sparqlClient = new SparqlClient({
   path: '/sparql'
 });
 
-sparqlClient.queryViaGet(
-  [
+const sparqlQuery = [
   'SELECT ?subject',
   'WHERE {',
   '  ?subject a owl:FunctionalProperty .',
   '}',
   'LIMIT 10'
-  ].join('\n')
-).subscribe(
+].join('\n')
+
+sparqlClient.queryViaGet(sparqlQuery).subscribe(
   data => console.log('nodeSparql.query - data', console.log(inspect(data, false, 5, true))),
   error => console.log('nodeSparql.query - error', error),
   () => console.log('nodeSparql.query - complete')
