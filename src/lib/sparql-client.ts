@@ -10,6 +10,7 @@
  *
  */
 
+import { inspect } from 'util';
 import { ClientRequest, ClientRequestArgs } from 'http';
 import { Observable } from 'rxjs';
 
@@ -84,20 +85,15 @@ export class SparqlClient {
                     if (response.statusCode) console.log('res.statusCode', response.statusCode);
                     if (response.statusMessage) console.log('res.statusMessage', response.statusMessage);
 
-                    // Parse and convert Data
-                    let data = '';
-
                     // Parse on each data chunk event
                     response.on('data', (chunk: string) => {
-                        data += chunk;
+                        observer.next(JSON.parse(chunk));
                     });
 
                     // Convert to JSON after last data chunk event
                     response.on('end', () => {
-                        observer.next(JSON.parse(data));
                         observer.complete();
                     });
-
 
                 });
 
