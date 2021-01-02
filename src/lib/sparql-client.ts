@@ -103,7 +103,7 @@ export class SparqlClient {
 
                     // on each data next chunk from stream
                     response.on('data', (chunk: string) => {
-                        observer.next(JSON.parse(chunk));
+                        observer.next();
                     });
 
                     // on end complete stream
@@ -133,16 +133,18 @@ export class SparqlClient {
  * 
  * @param data 
  */
-function getBindings(data: any): { bindi } {
-    let bindings = []; 
+function getBindingsFromChunk(chunk: string) {
+    const data = JSON.parse(chunk);
+    let resulRows: QueryResultRow[] = []; 
     const vars = data.head.vars;
 
     for (const i in data.results.bindings) {
-      const b = data.results.bindings[i];
+      const binding = data.results.bindings[i];
       console.log("\nrow "+i+" :");
+      let rowVarBindings: VariableBinding[] = []; 
       for (const j in vars) {
           const v = vars[j];
-          console.log(v+"="+b[v].value);
+          console.log(v+"="+binding[v].value);
       }
     }
 }
