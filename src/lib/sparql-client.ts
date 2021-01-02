@@ -21,10 +21,6 @@ interface RequestArgs {
     host: string;
     port?: number;
     path?: string;
-    nameSpaces?: {
-        prefix: string;
-        uri: string;
-    }[];
 };
 
 /**
