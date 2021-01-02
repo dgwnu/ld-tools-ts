@@ -21,6 +21,9 @@
   "homepage": "https://github.com/dgwnu/ld-tools-ts#readme",
   "peerDependencies": {
     "@dgwnu/fuseki-cli": "git+https://github.com/dgwnu/fuseki-cli.git",
-    "rxjs": "^6.6.3"
+    "rxjs": "^6.6.3",
+    "rdflib-ts": "1.2.58",
+    "mkdirp": "^1.0.4",
+    "bluebird": "^3.7.2"
   }
 }
