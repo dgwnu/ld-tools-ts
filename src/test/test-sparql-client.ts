@@ -34,7 +34,6 @@ const sparqlQuery = [
   'LIMIT 10'
 ].join('\n');
 
-NamespaceManagerInstance.registerNamespace('ex', 'http://example.org#');
 
 sparqlClient.queryViaGet(sparqlQuery).subscribe(
   data => console.log('nodeSparql.query - data', console.log(inspect(data, false, 5, true))),
