@@ -2,11 +2,8 @@
   "name": "@dgwnu/ld-tools-ts",
   "version": "0.0.1",
   "description": "Linked Data Tools for TypeScript Applications",
-  "main": "lib/index.js",
-  "module": "lib/index.esm.js",
-  "scripts": {
-    "test": "echo test"
-  },
+  "main": "dist/lib/index.js",
+  "module": "dist/lib/index.esm.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/dgwnu/ld-tools-ts.git"
