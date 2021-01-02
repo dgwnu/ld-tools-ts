@@ -31,8 +31,8 @@ interface RequestArgs {
  * Data Bindings of a Query Result
  */
 interface VariableBinding {
-    variable: string;
-    value: IRI;
+    varName: string;
+    varValue: IRI;
 }
 
 interface QueryResultRow {
@@ -130,22 +130,38 @@ export class SparqlClient {
 }
 
 /**
- * 
- * @param data 
+ * Return query result variale binding values as Query Result Rows (with IRI-values)
+ * @param chunk Chunk of data to read the result variable bindings 
  */
-function getBindingsFromChunk(chunk: string) {
+function getQueryRsultRows(chunk: string) {
     const data = JSON.parse(chunk);
-    let resulRows: QueryResultRow[] = []; 
-    const vars = data.head.vars;
+    let resultRows: QueryResultRow[] = []; 
+    const varObjs = data.head.vars;
 
-    for (const i in data.results.bindings) {
-      const binding = data.results.bindings[i];
-      console.log("\nrow "+i+" :");
-      let rowVarBindings: VariableBinding[] = []; 
-      for (const j in vars) {
-          const v = vars[j];
-          console.log(v+"="+binding[v].value);
+    // Loop through result rows
+    for (const rowIndex in data.results.bindings) {
+      const resultRowData = data.results.bindings[rowIndex];
+      console.log("\nrow "+ rowIndex +" :");
+      let bindings: VariableBinding[] = [];
+
+      // Loop through binded variables
+      for (const varIndex in varObjs) {
+          const varName = varObjs[varIndex];
+          const varValueStr = String(resultRowData[varName].value);
+          console.log(varName + "=" + varValueStr);
+
+          // Add Variable Binding Value
+          bindings.push({
+              varName: varName,
+              varValue: new IRI(varValueStr)
+          });
       }
+
+      // Add Query Result Row
+      resultRows.push({
+          rowNr: Number(rowIndex),
+          bindings: bindings
+      });
     }
 }
   
