@@ -15,7 +15,7 @@
  */
 import { ClientRequest, ClientRequestArgs } from 'http';
 import { Observable } from 'rxjs';
-import { IRI } from 'rdflib-ts'; 
+import { IRI, NamespaceManagerInstance } from 'rdflib-ts'; 
 
 interface RequestArgs {
     host: string;
@@ -84,6 +84,10 @@ export class SparqlClient {
 
                 console.log(`viaGetReqPath = ${viaGetReqPath}`);
 
+                // Set namespace prefixes for IRI-values
+                
+
+
                 // Define via get request query
                 const queryViaGetReq = new ClientRequest({
                     host: buildReqArgs.host,
@@ -99,7 +103,7 @@ export class SparqlClient {
 
                     // on each data next chunk from stream
                     response.on('data', (chunk: string) => {
-                        observer.next(getQueryRsultRows(chunk));
+                        observer.next(getQueryResultRows(chunk));
                     });
 
                     // on end complete stream
@@ -129,7 +133,7 @@ export class SparqlClient {
  * Return query result variale binding values as Query Result Rows (with IRI-values)
  * @param chunk Chunk of data to read the result variable bindings 
  */
-function getQueryRsultRows(chunk: string) {
+function getQueryResultRows(chunk: string) {
     const data = JSON.parse(chunk);
     let resultRows: QueryResultRow[] = []; 
     const varObjs = data.head.vars;
@@ -159,4 +163,21 @@ function getQueryRsultRows(chunk: string) {
     }
 
     return resultRows;
+}
+
+
+/**
+ * Add namesspaces that are used in Query to default Namespaces for new IRI's
+ * @param query SparQl Query
+ */
+function addQueryNameSpaces(query: string) {
+    const prefixLines = query.split('\n').filter(queryLine => queryLine.toLowerCase().startsWith('prefix'));
+
+    for (const prefixLine of prefixLines) {
+        const nsPrefix = prefixLine.split(' ')[1].split(':')[0].trim();
+        console.log('nsPrefix', nsPrefix);
+        const nsUrl = prefixLine.split('<')[1].split('>')[0];
+        console.log('nsUrl', nsUrl);
+    }
+
 }
