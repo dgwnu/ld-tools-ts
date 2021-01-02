@@ -171,6 +171,7 @@ function getQueryResultRows(chunk: string) {
  */
 function addQueryNameSpaces(query: string) {
     const prefixLines = query.split('\n').filter(queryLine => queryLine.toLowerCase().startsWith('prefix'));
+    console.log('prefixLines', prefixLines);
 
     for (const prefixLine of prefixLines) {
         const nsPrefix = prefixLine.split(' ')[1].split(':')[0].trim();
