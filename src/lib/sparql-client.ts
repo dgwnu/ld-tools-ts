@@ -85,12 +85,12 @@ export class SparqlClient {
                     if (response.statusCode) console.log('res.statusCode', response.statusCode);
                     if (response.statusMessage) console.log('res.statusMessage', response.statusMessage);
 
-                    // Parse on each data chunk event
+                    // on each data next chunk from stream
                     response.on('data', (chunk: string) => {
                         observer.next(JSON.parse(chunk));
                     });
 
-                    // Convert to JSON after last data chunk event
+                    // on end complete stream
                     response.on('end', () => {
                         observer.complete();
                     });
@@ -112,3 +112,17 @@ export class SparqlClient {
     }
 
 }
+
+function logData(data: any) {
+    const vars = data.head.vars;
+
+    for (const i in data.results.bindings) {
+      const b = data.results.bindings[i];
+      console.log("\nrow "+i+" :");
+      for (const j in vars) {
+          const v = vars[j];
+          console.log(v+"="+b[v].value);
+      }
+    }
+}
+  
