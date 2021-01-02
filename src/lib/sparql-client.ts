@@ -103,7 +103,7 @@ export class SparqlClient {
 
                     // on each data next chunk from stream
                     response.on('data', (chunk: string) => {
-                        observer.next();
+                        observer.next(getQueryRsultRows(chunk));
                     });
 
                     // on end complete stream
