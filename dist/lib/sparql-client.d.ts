@@ -10,14 +10,22 @@
  *
  */
 import { Observable } from 'rxjs';
+import { IRI } from 'rdflib-ts';
 interface RequestArgs {
     host: string;
     port?: number;
     path?: string;
-    nameSpaces?: {
-        prefix: string;
-        uri: string;
-    }[];
+}
+/**
+ * Data Bindings of a Query Result
+ */
+interface VariableBinding {
+    varName: string;
+    varValue: IRI;
+}
+interface QueryResultRow {
+    rowNr: number;
+    bindings: VariableBinding[];
 }
 export declare class SparqlClient {
     private defaultClientArgs?;
@@ -33,6 +41,6 @@ export declare class SparqlClient {
      * @param namedGraphUri Named Graph Uri (optional)
      * @param reqArgs Endpoint server args (required of no default client args specified)
      */
-    query(query: string, defaultGraphUri?: string, namedGraphUri?: string, reqArgs?: RequestArgs): Observable<any>;
+    queryViaGet(query: string, defaultGraphUri?: string, namedGraphUri?: string, reqArgs?: RequestArgs): Observable<QueryResultRow[]>;
 }
 export {};

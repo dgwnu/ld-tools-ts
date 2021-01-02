@@ -2,6 +2,7 @@ import typescript from 'rollup-plugin-typescript2';
 
 const srcFilePath = './lib/index.ts';
 const distFilePathPrefix = '../dist/lib/index.';
+const externalDependencies = ['http', 'rxjs', 'rdflib-ts'];
 
 const rollupParms = { tsconfig: 'ts-lib-config.json' };
 
@@ -13,6 +14,7 @@ export default [
       format: 'esm',
     },
     plugins: [typescript(rollupParms)],
+    external: [ externalDependencies ]
   },
   {
     input: srcFilePath,
@@ -21,5 +23,6 @@ export default [
       format: 'cjs',
     },
     plugins: [typescript(rollupParms)],
+    external: [ externalDependencies ]
   },
 ]
