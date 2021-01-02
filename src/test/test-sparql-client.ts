@@ -11,6 +11,8 @@
  * NODE Package Imports
  */
 import { inspect } from 'util';
+import { readFileSync } from 'fs';
+import { join, resolve } from 'path';
 
  /**
   * DGWNU Package Imports
@@ -25,6 +27,7 @@ const sparqlClient = new SparqlClient({
   path: '/sparql'
 });
 
+/*
 const sparqlQuery = [
   'PREFIX dbo: <http://dbpedia.org/ontology/>',
   'SELECT ?subject',
@@ -33,9 +36,11 @@ const sparqlQuery = [
   '}',
   'LIMIT 10'
 ].join('\n');
+*/
 
+const sparqlQuery00 = readFileSync(join(__dirname, 'test-sparql-client-00.rq'), 'utf-8').toString();
 
-sparqlClient.queryViaGet(sparqlQuery).subscribe(
+sparqlClient.queryViaGet(sparqlQuery00).subscribe(
   data => console.log('nodeSparql.query - data', console.log(inspect(data, false, 5, true))),
   error => console.log('nodeSparql.query - error', error),
   () => console.log('nodeSparql.query - complete')
