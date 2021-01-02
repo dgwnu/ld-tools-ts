@@ -38,7 +38,7 @@ const sparqlQuery = [
 ].join('\n');
 */
 
-const sparqlQuery00 = readFileSync(join(__dirname, 'test-sparql-client-00.rq'), 'utf-8').toString();
+const sparqlQuery00 = readFileSync(join(__dirname, 'test-sparql-client-00.rq'), 'utf-8');
 
 sparqlClient.queryViaGet(sparqlQuery00).subscribe(
   data => console.log('nodeSparql.query - data', console.log(inspect(data, false, 5, true))),

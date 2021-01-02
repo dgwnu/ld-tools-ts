@@ -170,7 +170,7 @@ function getQueryResultRows(chunk: string) {
  * @param query SparQl Query
  */
 function addQueryNameSpaces(query: string) {
-    const prefixLines = query.split('\n').filter(queryLine => queryLine.toLowerCase().startsWith('prefix'));
+    const prefixLines = query.split('\n').filter(queryLine => queryLine.trim().toLowerCase().startsWith('prefix'));
 
     for (const prefixLine of prefixLines) {
         const nsPrefix = prefixLine.split(' ')[1].split(':')[0].trim();

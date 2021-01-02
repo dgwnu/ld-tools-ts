@@ -1,7 +1,7 @@
-  PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
 
-  SELECT ?subject
-  WHERE {
+SELECT ?subject
+WHERE {
     ?subject a owl:FunctionalProperty .
-  }
-  LIMIT 10
+}
+LIMIT 10
