@@ -27,17 +27,6 @@ const sparqlClient = new SparqlClient({
   path: '/sparql'
 });
 
-/*
-const sparqlQuery = [
-  'PREFIX dbo: <http://dbpedia.org/ontology/>',
-  'SELECT ?subject',
-  'WHERE {',
-  '  ?subject a owl:FunctionalProperty .',
-  '}',
-  'LIMIT 10'
-].join('\n');
-*/
-
 const sparqlQuery00 = readFileSync(join(__dirname, 'test-sparql-client-00.rq'), 'utf-8');
 
 sparqlClient.queryViaGet(sparqlQuery00).subscribe(
