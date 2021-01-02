@@ -10,10 +10,20 @@
 
 import { SparqlClient } from '../lib/sparql-client';
 
+/*
 const queryStatements = [
   'SELECT ?subject ?predicate ?object',
   'WHERE {',
   '  ?subject ?predicate ?object .',
+  '}',
+  'LIMIT 10'
+].join('\n');
+*/
+
+const queryStatements = [
+  'SELECT ?subject',
+  'WHERE {',
+  '  ?subject a owl:FunctionalProperty .',
   '}',
   'LIMIT 10'
 ].join('\n');
