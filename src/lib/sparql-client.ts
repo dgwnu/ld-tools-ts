@@ -85,8 +85,7 @@ export class SparqlClient {
                 console.log(`viaGetReqPath = ${viaGetReqPath}`);
 
                 // Set namespace prefixes for IRI-values
-                
-
+                addQueryNameSpaces(query);
 
                 // Define via get request query
                 const queryViaGetReq = new ClientRequest({
