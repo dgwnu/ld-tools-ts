@@ -141,14 +141,12 @@ function getQueryRsultRows(chunk: string) {
     // Loop through result rows
     for (const rowIndex in data.results.bindings) {
       const resultRowData = data.results.bindings[rowIndex];
-      console.log("\nrow "+ rowIndex +" :");
       let bindings: VariableBinding[] = [];
 
       // Loop through binded variables
       for (const varIndex in varObjs) {
           const varName = varObjs[varIndex];
           const varValueStr = String(resultRowData[varName].value);
-          console.log(varName + "=" + varValueStr);
 
           // Add Variable Binding Value
           bindings.push({
@@ -166,4 +164,3 @@ function getQueryRsultRows(chunk: string) {
 
     return resultRows;
 }
-  
