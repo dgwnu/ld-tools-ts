@@ -41,7 +41,7 @@ const sparqlClient = new SparqlClient({
 });
 
 sparqlClient.queryViaGet(queryStatements).subscribe(
-  data => console.log('nodeSparql.query - data', logData(data)),
+  data => console.log('nodeSparql.query - data', console.log(data)),
   error => console.log('nodeSparql.query - error', error),
   () => console.log('nodeSparql.query - complete')
 );
